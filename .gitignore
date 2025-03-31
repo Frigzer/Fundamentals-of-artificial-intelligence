@@ -13,3 +13,6 @@ venv/
 __pycache__/
 *.py[cod]
 *.pyo
+
+# Folder z danymi
+data/
