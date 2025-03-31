@@ -6,8 +6,9 @@ from PIL import Image
 import random
 from torchvision import transforms
 
-def download_and_prepare_data(data_dir = "data"):
-    # === Pobieranie danych ===
+
+def download_and_prepare_data(data_dir="data"):
+    """Pobiera dane z repozytorium american-sign-language-dataset"""
     dataset_path = kagglehub.dataset_download("esfiam/american-sign-language-dataset")
     print(f"Pobrano dane do cache: {dataset_path}")
 
@@ -36,6 +37,7 @@ def download_and_prepare_data(data_dir = "data"):
             shutil.copy2(item, dest)
 
     print(f"Skopiowano dane do: {data_dir}")
+
 
 def merge_to_temp(data_dir="data", temp_dir="temp"):
     """Scala dane z folderów train i test do folderu temp/"""
@@ -66,7 +68,9 @@ def merge_to_temp(data_dir="data", temp_dir="temp"):
         if old_path.exists():
             shutil.rmtree(old_path)
 
+
 def augment_dataset(temp_dir="temp", target_count_per_class=140):
+    """Augmentuje dane zwiększając ich ilość"""
     temp_dir = Path(temp_dir)
 
     # Przykładowe augmentacje (można rozszerzyć)
@@ -108,7 +112,9 @@ def augment_dataset(temp_dir="temp", target_count_per_class=140):
 
     print("Augmentacja zakończona.")
 
+
 def split_dataset_from_temp(temp_dir="temp", output_dir="data", split=(0.8, 0.1, 0.1)):
+    """Dzieli dane na zbiór treningowy, walidacyjny i testowy"""
     temp_dir = Path(temp_dir)
     output_dir = Path(output_dir)
 
@@ -141,7 +147,8 @@ def split_dataset_from_temp(temp_dir="temp", output_dir="data", split=(0.8, 0.1,
             for file_path in files:
                 shutil.copy(file_path, dest_dir)
 
-        print(f"{class_name}: {total} obrazków -> train:{len(splits['train'])}, val:{len(splits['val'])}, test:{len(splits['test'])}")
+        print(
+            f"{class_name}: {total} obrazków -> train:{len(splits['train'])}, val:{len(splits['val'])}, test:{len(splits['test'])}")
 
     print("Podział danych zakończony.")
 
@@ -150,9 +157,9 @@ def split_dataset_from_temp(temp_dir="temp", output_dir="data", split=(0.8, 0.1,
         shutil.rmtree(temp_dir)
         print(f"Usunięto folder tymczasowy: {temp_dir}")
 
-# === Główna sekcja ===
+
 if __name__ == "__main__":
-    download_and_prepare_data()
-    merge_to_temp()
-    augment_dataset()
-    split_dataset_from_temp()
+    download_and_prepare_data()  # Pobranie danych
+    merge_to_temp()  # Scalenie danych testowych i treningowych do folderu temp
+    augment_dataset()  # Augmentacja danych - podwojenie liczby zdjęć
+    split_dataset_from_temp()  # Podział danych na zbiór treningowy, testowy i walidacyjny
