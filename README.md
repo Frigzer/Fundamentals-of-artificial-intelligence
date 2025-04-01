@@ -82,28 +82,7 @@ python serialize_data.py
 
 ---
 
-## 🖼️ Dane wejściowe
-
-Obrazy muszą być posortowane w katalogach `train/<klasa>` i `test/<klasa>`, np.:
-
-```
-data/train/A/image1.jpg
-data/train/B/image2.jpg
-data/test/3/image5.jpg
-```
-
----
-
-## 📊 Rezultat
-
-Program trenuje sieć konwolucyjną (CNN) i wypisuje:
-- Straty treningowe
-- Dokładność na zbiorze testowym
-- Przykładowe predykcje (obrazy + etykiety)
-
----
-
 ## 🛡️ Info
 
-Nie wrzucaj folderu `.venv/` do repo – jest ignorowany w `.gitignore`.  
+Nie wrzucaj folderu `.venv/` oraz utworzonych folderów `data/` i `serialized/` do repo – są ignorowane w `.gitignore`.  
 Każdy powinien tworzyć własne środowisko lokalnie.
