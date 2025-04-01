@@ -16,3 +16,4 @@ __pycache__/
 
 # Folder z danymi
 data/
+serialized/
