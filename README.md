@@ -10,9 +10,16 @@ Model trenuje na zbiorze obrazów przedstawiających znaki 0–9 oraz A–Z (ł�
 ```
 📦Fundamentals-of-artificial-intelligence/
  ┣ 📂data/
- ┃ ┣ 📂train/
  ┃ ┣ 📂test/
- ┣ 📜train_asl.py
+ ┃ ┣ 📂train/
+ ┃ ┣ 📂val/
+ ┣ 📂serialized/
+ ┃ ┣ 📂test/
+ ┃ ┣ 📂train/
+ ┃ ┣ 📂val/
+ ┣ 📜prepare_data.py
+ ┣ 📜chck_data.py
+ ┣ 📜serialize_data.py
  ┣ 📜requirements.txt
  ┣ 📜.gitignore
  ┗ 📜README.md
@@ -25,7 +32,7 @@ Model trenuje na zbiorze obrazów przedstawiających znaki 0–9 oraz A–Z (ł�
 - Python 3.8+
 - pip
 - Git (lub GitHub Desktop)
-- (opcjonalnie) VSCode z rozszerzeniem Python
+- (opcjonalnie) VSCode z rozszerzeniem Python lub PyCharm
 
 ---
 
@@ -66,9 +73,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 6. Uruchom model treningowy
+### 6. Przygotuj dane treningowe - WAŻNA KOLEJNOŚĆ!!!
 ```bash
-python train_asl.py
+python prepare_data.py
+python check_data.py
+python serialize_data.py
 ```
 
 ---
