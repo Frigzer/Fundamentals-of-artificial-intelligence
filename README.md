@@ -1,7 +1,7 @@
 # 🧠 American Sign Language Classifier
 
-Projekt klasyfikatora obrazów znaków języka migowego ASL (American Sign Language) przy użyciu PyTorcha i CNN.  
-Model trenuje na zbiorze obrazów przedstawiających znaki 0–9 oraz A–Z (łącznie 36 klas).
+Projekt klasyfikatora obrazów znaków języka migowego ASL (American Sign Language) przy użyciu PyTorcha.  
+Model bedzie się trenował na zbiorze obrazów przedstawiających znaki 0–9 oraz A–Z (łącznie 36 klas).
 
 ---
 
