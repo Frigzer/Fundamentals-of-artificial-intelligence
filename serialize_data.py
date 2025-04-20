@@ -12,6 +12,7 @@ from PIL import Image
 
 # === Transformacje ===
 train_transform = transforms.Compose([
+    transforms.Resize((224, 224)),
     transforms.RandomHorizontalFlip(),
     transforms.RandomRotation(10),
     transforms.ColorJitter(brightness=0.2, contrast=0.2),
@@ -20,8 +21,10 @@ train_transform = transforms.Compose([
 ])
 
 test_transform = transforms.Compose([
+    transforms.Resize((224, 224)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.5], std=[0.5])
+
 ])
 
 
