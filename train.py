@@ -1,8 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import time
 
 def train_model(model, train_loader, val_loader, epochs=10, lr=0.001, device="cpu"):
+    start_time = time.time()
     model.to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
@@ -31,6 +33,9 @@ def train_model(model, train_loader, val_loader, epochs=10, lr=0.001, device="cp
         print(f"Epoch {epoch+1} | Loss: {running_loss:.4f} | Accuracy: {train_acc:.2f}%")
 
         evaluate(model, val_loader, device)
+
+    total_time = time.time() - start_time
+    print(f"\nTraining complete, elapsed time: {total_time:.2f} seconds")
 
 def evaluate(model, data_loader, device="cpu"):
     model.eval()
