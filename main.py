@@ -8,4 +8,5 @@ if __name__ == "__main__":
     model = ASLClassifier(num_classes=36)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using: {device}\n")
     train_model(model, train_loader, val_loader, epochs=10, lr=0.001, device=device)
