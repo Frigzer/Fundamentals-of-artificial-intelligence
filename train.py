@@ -16,21 +16,21 @@ def train_model(model, train_loader, val_loader, epochs=10, lr=0.001, device="cp
         model.train() # ustawia model w tryb treningowy
         running_loss = 0.0 # Do śledzenia błędu
         correct = 0 # Do śledznia dokładności
-        total = 0 # Do śledzenia dokładności
+        total = 0   # ---------||------------
 
         for inputs, labels in train_loader:
             inputs, labels = inputs.to(device), labels.to(device)
-            optimizer.zero_grad() # Zerowanie gradientu, przed nowym batchem trzeba zawsze wyzeerować
+            optimizer.zero_grad() # Zerowanie gradientu, przed nowym batchem trzeba zawsze wyzerować
 
             outputs = model(inputs) # Przepuszacznie danych przez sieć
             loss = criterion(outputs, labels) # obliczenie straty
             loss.backward() # Obliczanie gradientów
             optimizer.step() # Aktualizacja wag
 
-            running_loss += loss.item() # loss to tensor a item wyciaga wartosc, sumuje strate z kazdego batcha
+            running_loss += loss.item() # loss to tensor a item wyciaga wartość, sumuje strate z kazdego batcha
             _, predicted = outputs.max(1) # zwraca przewidywanie
             total += labels.size(0) # labels.size(0) to batch size
-            correct += predicted.eq(labels).sum().item() # sprawdza czy dobrze trafilo, sum liczy ile trafien
+            correct += predicted.eq(labels).sum().item() # sprawdza czy dobrze trafiło, sum liczy ile trafień
 
         train_acc = 100. * correct / total
         print(f"Epoch {epoch+1} | Loss: {running_loss:.4f} | Accuracy: {train_acc:.2f}%")
