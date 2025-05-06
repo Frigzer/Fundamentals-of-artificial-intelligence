@@ -1,4 +1,6 @@
 import torch
+import csv
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
@@ -24,6 +26,45 @@ def plot_training_curves(train_losses, val_losses):
     plt.show()
 
 
+# === Wykres słupkowy metryk per klasa ===
+def plot_classification_metrics(report_dict, class_names):
+    metrics = ['precision', 'recall', 'f1-score']
+    values = {metric: [] for metric in metrics}
+
+    for cls in class_names:
+        for metric in metrics:
+            values[metric].append(report_dict[cls][metric])
+
+    x = np.arange(len(class_names))
+    width = 0.25
+
+    plt.figure(figsize=(14, 6))
+    plt.bar(x - width, values['precision'], width, label='Precision')
+    plt.bar(x, values['recall'], width, label='Recall')
+    plt.bar(x + width, values['f1-score'], width, label='F1-Score')
+
+    plt.xlabel('Klasa')
+    plt.ylabel('Wartość')
+    plt.title('Precision / Recall / F1-score per klasa')
+    plt.xticks(ticks=x, labels=class_names, rotation=90)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+# === Zapis metryk do CSV ===
+def save_metrics_to_csv(report_dict, class_names, path="results/classification_metrics.csv"):
+    metrics = ['precision', 'recall', 'f1-score']
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['class'] + metrics)
+        for cls in class_names:
+            row = [cls] + [report_dict[cls][m] for m in metrics]
+            writer.writerow(row)
+    print(f"Zapisano metryki do pliku: {path}")
+
+
 # === Ewaluacja modelu na danych testowych ===
 def evaluate_model(model, test_loader, device="cpu"):
     model.eval()
@@ -46,13 +87,18 @@ def evaluate_model(model, test_loader, device="cpu"):
     print(f"\nDokładność (Accuracy): {accuracy * 100:.2f}%\n")
 
     class_names = get_class_names()
+    report = classification_report(all_labels, all_predicted, target_names=class_names, output_dict=True)
     print("Raport klasyfikacji:")
     print(classification_report(all_labels, all_predicted, target_names=class_names))
 
+    # Wykres metryk i zapis CSV
+    plot_classification_metrics(report, class_names)
+    save_metrics_to_csv(report, class_names)
+
+    # Macierz pomyłek
     cm = confusion_matrix(all_labels, all_predicted)
     plt.figure(figsize=(10, 8))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-                xticklabels=class_names, yticklabels=class_names)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
     plt.xlabel('Predykcja')
     plt.ylabel('Rzeczywista')
     plt.title('Macierz Pomyłek')
@@ -60,7 +106,7 @@ def evaluate_model(model, test_loader, device="cpu"):
     plt.show()
 
 
-# === Pokazuje 10 przykładowych obrazków + przewidywania ===
+# === Pokazuje przykładowe obrazki z predykcjami ===
 def visualize_predictions(model, test_loader, device="cpu"):
     model.eval()
     class_names = get_class_names()
@@ -79,7 +125,7 @@ def visualize_predictions(model, test_loader, device="cpu"):
 
     for i in range(num_samples):
         image = images[i].cpu().numpy().transpose(1, 2, 0)
-        image = (image * 0.5) + 0.5  # od-normowanie (bo wcześniej był Normalized)
+        image = (image * 0.5) + 0.5  # od-normowanie
         true_label = labels[i].cpu().item()
         predicted_label = predictions[i].cpu().item()
 
