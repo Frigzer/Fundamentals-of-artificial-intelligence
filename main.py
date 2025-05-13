@@ -2,7 +2,7 @@ import torch
 from model import ASLClassifier
 from train import train_model
 from serialize_data import get_serialized_dataloaders
-from evaluate import plot_training_curves, evaluate_model, visualize_predictions
+from evaluate import plot_training_curves, evaluate_model, visualize_predictions, visualize_mistakes
 
 if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -30,3 +30,6 @@ if __name__ == "__main__":
 
     # Podgląd przykładowych przewidywań
     visualize_predictions(model, test_loader, device=device)
+
+    # Podgląd błędnych przewidywań
+    visualize_mistakes(model, test_loader, device=device)
