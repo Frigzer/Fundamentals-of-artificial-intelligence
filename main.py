@@ -1,3 +1,5 @@
+# main.py
+
 import torch
 from model import ASLClassifier
 from train import train_model

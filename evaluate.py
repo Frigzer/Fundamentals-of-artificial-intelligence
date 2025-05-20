@@ -1,3 +1,5 @@
+# evaluate.py
+
 import torch
 import csv
 import os
@@ -8,10 +10,12 @@ from sklearn.metrics import classification_report, confusion_matrix
 import seaborn as sns
 from torchvision.datasets import ImageFolder
 
+
 # === Nazwy klas na podstawie folderów (działa jak ImageFolder) ===
 def get_class_names(path="data/train"):
     dataset = ImageFolder(path)  # Tworzy zbior danych obrazów z folderów, gdzie każdy folder to jedna klasa
     return dataset.classes  # Zwraca listę nazw klas (czyli nazw folderów)
+
 
 # === Wykres funkcji kosztu ===
 def plot_training_curves(train_losses, val_losses):
@@ -23,6 +27,7 @@ def plot_training_curves(train_losses, val_losses):
     plt.legend()  # Dodaje legendę
     plt.title('Funkcja kosztu (Loss)')  # Tytuł wykresu
     plt.show()  # Wyświetlenie wykresu
+
 
 # === Wykres słupkowy metryk per klasa ===
 def plot_classification_metrics(report_dict, class_names):
@@ -49,6 +54,7 @@ def plot_classification_metrics(report_dict, class_names):
     plt.tight_layout()
     plt.show()
 
+
 # === Zapis metryk do CSV ===
 def save_metrics_to_csv(report_dict, class_names, path="results/classification_metrics.csv"):
     metrics = ['precision', 'recall', 'f1-score']
@@ -60,6 +66,7 @@ def save_metrics_to_csv(report_dict, class_names, path="results/classification_m
             row = [cls] + [report_dict[cls][m] for m in metrics]  # Dane dla jednej klasy
             writer.writerow(row)
     print(f"Zapisano metryki do pliku: {path}")
+
 
 # === Ewaluacja modelu na danych testowych ===
 def evaluate_model(model, test_loader, device="cpu"):
@@ -98,6 +105,7 @@ def evaluate_model(model, test_loader, device="cpu"):
     plt.title('Macierz Pomyłek')
     plt.tight_layout()
     plt.show()
+
 
 # === Pokazuje przykładowe obrazki z predykcjami ===
 def visualize_predictions(model, test_loader, device="cpu", show_only_errors=False, max_samples=10):
@@ -147,7 +155,8 @@ def visualize_predictions(model, test_loader, device="cpu", show_only_errors=Fal
             color = 'green' if is_correct else 'red'
 
             ax.imshow(image)
-            ax.set_title(f'True: {class_names[true_label]}\nPred: {class_names[predicted_label]}', color=color, fontsize=10)
+            ax.set_title(f'True: {class_names[true_label]}\nPred: {class_names[predicted_label]}', color=color,
+                         fontsize=10)
         else:
             ax.axis('off')
 
@@ -155,6 +164,7 @@ def visualize_predictions(model, test_loader, device="cpu", show_only_errors=Fal
 
     plt.tight_layout(h_pad=3.0)
     plt.show()
+
 
 # === Pokazuje tylko błędne predykcje z całego zbioru testowego ===
 def visualize_mistakes(model, test_loader, device="cpu", max_samples=10):
