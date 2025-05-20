@@ -139,7 +139,9 @@ def visualize_predictions(model, test_loader, device="cpu", show_only_errors=Fal
         if i < num_samples:
             image, true_label, predicted_label = all_samples[i]
             image = image.numpy().transpose(1, 2, 0)
-            image = (image * 0.5) + 0.5
+            mean = np.array([0.5, 0.5, 0.5])
+            std = np.array([0.5, 0.5, 0.5])
+            image = std * image + mean
 
             is_correct = true_label == predicted_label
             color = 'green' if is_correct else 'red'

@@ -9,7 +9,7 @@ from torchvision import transforms
 
 def download_and_prepare_data(data_dir="data"):
     """Pobiera dane z repozytorium american-sign-language-dataset"""
-    dataset_path = kagglehub.dataset_download("esfiam/american-sign-language-dataset")
+    dataset_path = kagglehub.dataset_download("grassknoted/asl-alphabet")
     print(f"Pobrano dane do cache: {dataset_path}")
 
     # Skopiuj wszystko z cache do ./data
@@ -21,7 +21,7 @@ def download_and_prepare_data(data_dir="data"):
     source_root = Path(dataset_path)
     asl_folder = None
     for item in source_root.iterdir():
-        if item.is_dir() and "ASL_Gestures" in item.name:
+        if item.is_dir() and "asl_alphabet_test" in item.name:
             asl_folder = item
             break
 
