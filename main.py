@@ -35,3 +35,6 @@ if __name__ == "__main__":
 
     # Podgląd błędnych przewidywań
     visualize_mistakes(model, test_loader, device=device)
+
+    # Zapisz wytrenowany model
+    torch.save(model.state_dict(), "model.pth")
