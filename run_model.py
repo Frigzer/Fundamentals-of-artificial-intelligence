@@ -31,7 +31,7 @@ transform = transforms.Compose([
 class_names = get_class_names()
 
 # === Wczytanie i analiza wielu zdjęć ===
-image_files = [f for f in os.listdir(image_folder) if f.endswith(".jpg") or f.endswith(".png")]
+image_files = [f for f in os.listdir(image_folder) if f.endswith(".jpg") or f.endswith(".png") or f.endswith(".jpeg")]
 
 if not image_files:
     print(f"Brak plików .jpg/.png w folderze: {image_folder}")
