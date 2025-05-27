@@ -2,7 +2,7 @@
 
 import torch
 from torchvision import transforms
-from PIL import Image
+from PIL import Image, ImageOps
 import matplotlib.pyplot as plt
 import os
 from model import ASLClassifier
@@ -39,6 +39,7 @@ else:
     for filename in image_files:
         image_path = os.path.join(image_folder, filename)
         img = Image.open(image_path).convert("RGB")
+        img = ImageOps.exif_transpose(img)
         input_tensor = transform(img).unsqueeze(0).to(device)
 
         with torch.no_grad():
