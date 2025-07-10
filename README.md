@@ -13,13 +13,15 @@ Model bedzie się trenował na zbiorze obrazów przedstawiających znaki 0–9 o
  ┃ ┣ 📂test/
  ┃ ┣ 📂train/
  ┃ ┣ 📂val/
+ ┣ 📂photos/
  ┣ 📂serialized/
  ┃ ┣ 📂test/
  ┃ ┣ 📂train/
  ┃ ┣ 📂val/
  ┣ 📜prepare_data.py
- ┣ 📜chck_data.py
+ ┣ 📜check_data.py
  ┣ 📜serialize_data.py
+ ┣ 📜run_model.py
  ┣ 📜requirements.txt
  ┣ 📜.gitignore
  ┗ 📜README.md
