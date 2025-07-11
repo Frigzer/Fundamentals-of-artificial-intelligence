@@ -21,6 +21,8 @@ Model bedzie się trenował na zbiorze obrazów przedstawiających znaki 0–9 o
  ┣ 📜prepare_data.py
  ┣ 📜check_data.py
  ┣ 📜serialize_data.py
+ ┣ 📜train.py
+ ┣ 📜main.py
  ┣ 📜run_model.py
  ┣ 📜requirements.txt
  ┣ 📜.gitignore
